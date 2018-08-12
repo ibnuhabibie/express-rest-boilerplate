@@ -1,6 +1,36 @@
+const http = require('http')
+
 const app = require('./src/config/express')
 const { PORT, NODE_ENV } = process.env
 
-app.listen(PORT, () => console.info(`server started on port ${PORT} (${NODE_ENV})`))
+const onError = error => {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
 
-module.exports = app
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges')
+      process.exit(1)
+      break
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use')
+      process.exit(1)
+      break
+    default:
+      throw error
+  }
+}
+
+const onListening = () => console.log(`Listening on PORT ${PORT} and ENV ${NODE_ENV}`)
+  
+let server = http.createServer(app)
+
+server.listen(PORT)
+server.on('error', onError)
+server.on('listening', onListening)
