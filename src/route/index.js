@@ -3,6 +3,7 @@ const express = require('express')
 const APIError = require('../lib/error')
 const { upload, validateImage } = require('../config/multer')
 const validation = require('./validation')
+const Model = require('../models')
 
 const router = express.Router()
 

@@ -20,7 +20,7 @@ i18n.configure({
   locales: ['en', 'id'],
   defaultLocale: 'en',
   cookie: 'locale',
-  directory: 'locales',
+  directory: __dirname + '/../locales',
   objectNotation: true
 })
 
