@@ -1,12 +1,18 @@
 const express = require('express')
 
-const ApiError = require('../lib/error')
+const APIError = require('../lib/error')
 const router = express.Router()
 
-router.get('/', async (req, res) => res.send('Hello World'))
+router.get('/health-check', async (req, res) => {
+  res.json({
+    status: 200,
+    name: process.env.APP_NAME,
+    message: 'ok'
+  })
+})
 
 router.get('/test-error', async (req, res) => {
-  throw new ApiError(404, { custom: 'custom props' })
+  throw new APIError('Some message', 500, { custom: 'hello' })
 })
 
 module.exports = router

@@ -5,7 +5,8 @@
   "main": "boot.js",
   "scripts": {
     "start": "npm run dev",
-    "dev": "pm2 start pm2.config.js --env development"
+    "dev": "pm2 start pm2.config.js --env development",
+    "restart": "pm2 restart rest-boilerplate && pm2 logs rest-boilerplate"
   },
   "repository": {
     "type": "git",

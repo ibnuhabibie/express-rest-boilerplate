@@ -5,8 +5,6 @@ const { capitalize } = require('../helper/string')
 const url = process.env.SLACK_WEBHOOK_URL
 const webhook = new IncomingWebhook(url)
 
-
-
 const sendToChannel = async (err, req) => {
   let data = {
     attachments: [
@@ -14,11 +12,18 @@ const sendToChannel = async (err, req) => {
         color: 'danger',
         title: 'Internal Server Error',
         text: `${req.method} :: ${req.originalUrl}`,
-        fields: [{
-          title: 'Error-stack',
-          value: "```"+err.stack+"\nProperties\n"+JSON.stringify(err.properties, null, '\t')+"```",
-          short: false
-        }],
+        fields: [
+          {
+            title: 'Error-stack',
+            value:
+              '```' +
+              err.stack +
+              '\nProperties\n' +
+              JSON.stringify(err.properties, null, '\t') +
+              '```',
+            short: false
+          }
+        ],
         footer: process.env.APP_NAME,
         ts: Math.floor(Date.now() / 1000),
         mrkdwn_in: ['fields']
@@ -29,7 +34,7 @@ const sendToChannel = async (err, req) => {
   let fieldsWithLongValue = ['user-agent', 'accept']
 
   Object.keys(req.headers).forEach(key => {
-    let short = (fieldsWithLongValue.includes(key)) ? false : true
+    let short = fieldsWithLongValue.includes(key) ? false : true
 
     data.attachments[0].fields.push({
       title: capitalize(key),

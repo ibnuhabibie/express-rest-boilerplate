@@ -14,18 +14,28 @@ const { sendToChannel } = require('../tool/slack')
 
 const app = express()
 
-app.use(morgan('tiny'))
+app.use(compress())
+app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(compress())
+
 app.use(methodOverride())
 app.use(helmet())
 app.use(cors())
 
 app.use('/', routes)
 
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const error = new Error("We are looking for your page,. but we can't find it")
+  error.status = 404
+  error.title = 'Page Not Found'
+  next(error)
+})
+
 app.use((err, req, res, next) => {
-  console.error(req.method, '::', req.path, '::', 'error', err)
+  console.error(`${req.method} :: ${req.path} :: error :: ${err}`)
+  console.error(err)
   if (process.env.NODE_ENV !== 'development') sendToChannel(err, req)
   res.status(err.status || 500).json({ error: err.message })
 })

@@ -8,9 +8,7 @@ const onError = error => {
     throw error
   }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -27,8 +25,9 @@ const onError = error => {
   }
 }
 
-const onListening = () => console.log(`Listening on PORT ${PORT} and ENV ${NODE_ENV}`)
-  
+const onListening = () =>
+  console.log(`Listening on PORT ${PORT} and ENV ${NODE_ENV}`)
+
 let server = http.createServer(app)
 
 server.listen(PORT)

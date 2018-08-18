@@ -1,8 +1,9 @@
-var APIError = module.exports = function APIError(status, message, properties) {
-  if (!(this instanceof APIError)) return new APIError(status, message, properties)
-  
+var APIError = function APIError(status, message, properties) {
+  if (!(this instanceof APIError))
+    return new APIError(status, message, properties)
+
   if (typeof message === 'object' || typeof message === 'array') {
-    properties = message 
+    properties = message
   }
 
   if (typeof status !== 'number') {
@@ -24,4 +25,6 @@ APIError.prototype.toString = function() {
   return this.name + ': ' + this.status + ': ' + this.message
 }
 
-require('util').inherits(module.exports, Error)
+module.exports = APIError
+
+require('util').inherits(APIError, Error)
