@@ -1,0 +1,7 @@
+{
+	"hello": "Halo Dunia",
+    "hello %s": "Halo %s",
+    "validation": {
+        "email": "Inputan harus email yang benar"
+    }
+}

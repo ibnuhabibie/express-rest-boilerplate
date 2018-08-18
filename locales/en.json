@@ -1,0 +1,7 @@
+{
+	"hello": "Hello World",
+	"hello %s": "Hello %s",
+	"validation": {
+		"email": "Email is not valid"
+	}
+}

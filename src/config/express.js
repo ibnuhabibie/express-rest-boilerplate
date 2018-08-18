@@ -4,7 +4,9 @@ const bodyParser = require('body-parser')
 const compress = require('compression')
 const methodOverride = require('method-override')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
+const i18n = require('i18n')
 
 require('dotenv').config()
 require('express-async-errors')
@@ -14,14 +16,24 @@ const { sendToChannel } = require('../tool/slack')
 
 const app = express()
 
+i18n.configure({
+  locales: ['en', 'id'],
+  defaultLocale: 'en',
+  cookie: 'locale',
+  directory: 'locales',
+  objectNotation: true
+})
+
 app.use(compress())
 app.use(morgan('dev'))
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(methodOverride())
 app.use(helmet())
 app.use(cors())
+app.use(i18n.init)
 
 app.use('/', routes)
 
